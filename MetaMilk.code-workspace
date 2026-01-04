@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"name": "metamilk.github.io",
+			"path": "."
+		},
+		{
+			"name": "metamilk.github.io",
+			"path": "metamilk.github.io"
+		},
+		{
+			"name": "Website Repo",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true
+	}
+}
