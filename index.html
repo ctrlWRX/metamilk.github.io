@@ -53,7 +53,7 @@
                     const messageDiv = document.getElementById('formMessage');
                     
                     try {
-                        const response = await fetch('save_email.php', {
+                        const response = await fetch('/api/email-signup', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -61,18 +61,18 @@
                             body: JSON.stringify({ email: email })
                         });
                         
-                        const data = await response.json();
+                        const data = await response.json().catch(() => ({}));
                         messageDiv.style.display = 'block';
                         
-                        if (data.success) {
+                        if (response.ok && data.ok) {
                             messageDiv.style.backgroundColor = '#d4edda';
                             messageDiv.style.color = '#155724';
-                            messageDiv.textContent = 'Thank you! Your email has been saved.';
+                            messageDiv.textContent = data.message || 'Thank you! Your email has been saved.';
                             document.getElementById('emailInput').value = '';
                         } else {
                             messageDiv.style.backgroundColor = '#f8d7da';
                             messageDiv.style.color = '#721c24';
-                            messageDiv.textContent = 'Error: ' + data.message;
+                            messageDiv.textContent = 'Error: ' + (data.error || data.message || 'Unable to save email.');
                         }
                     } catch (error) {
                         messageDiv.style.display = 'block';

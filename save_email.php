@@ -33,7 +33,10 @@ try {
   }
   
   // Prepare SQL statement (prevents SQL injection)
-  $stmt = $conn->prepare("INSERT INTO user_profiles (email) VALUES (?)");
+  $stmt = $conn->prepare(
+    "INSERT INTO user_profiles (username, first_name, last_name, birthday, email, timezone)"
+    . " VALUES (NULL, NULL, NULL, NULL, ?, NULL)"
+  );
   
   if (!$stmt) {
     throw new Exception("Prepare failed: " . $conn->error);
