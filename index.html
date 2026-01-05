@@ -2,50 +2,85 @@
 <html>
     <head>
         <title>MetaMilk</title>
-        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='landing/images/Logo_Two.png') }}">
+        <link rel="icon" type="image/x-icon" href="images/Logo_Two.png">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="{{ url_for('static', filename='landing/styles.css') }}">
+        <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <script src="{{ url_for('static', filename='landing/script.js') }}" defer></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
     <body>
         <div class = "container-fluid section-one text-center">
-            <img src="{{ url_for('static', filename='landing/images/Logo.png') }}" alt="MetaMilk Logo" width="200" height="200" style="z-index: 3;">
+            <img src="images/Logo.png" alt="MetaMilk Logo" width="200" height="200" style="z-index: 3;">
             <h1 style="padding-top: 50px; padding-bottom: 20px;">MetaMilk Coming Q1 2026</h1>
             <h2>Prepare to hack the financial metaverse...</h2>
             <h3>Q1 2026</h3>
-        </div>
-
-        <!-- Email Signup Section -->
-        <section style="padding: 40px 20px; background-color: #f9f9f9; text-align: center;">
-            <h2>Stay Updated</h2>
-            <p>Subscribe to get the latest updates</p>
             
-            <form id="emailSignupForm" style="max-width: 400px; margin: 20px auto;">
-                <div style="display: flex; gap: 10px;">
+            <!-- Email Signup Form -->
+            <div id="email-signup" style="margin-top: 30px;">
+                <form id="signup-form" style="display: inline-block;">
                     <input 
                         type="email" 
-                        id="emailSignupInput" 
-                        name="email" 
+                        id="email-input" 
                         placeholder="Enter your email" 
                         required
-                        style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;"
-                    />
+                        style="
+                            background: transparent;
+                            border: 1px solid rgba(255,255,255,0.5);
+                            border-radius: 4px;
+                            padding: 12px 20px;
+                            color: white;
+                            font-size: 16px;
+                            width: 280px;
+                            outline: none;
+                        "
+                    >
                     <button 
                         type="submit" 
-                        style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;"
-                    >
-                        Subscribe
-                    </button>
-                </div>
-                <div id="emailSignupMessage" style="margin-top: 10px; display: none; padding: 10px; border-radius: 4px;"></div>
-            </form>
-        </section>
+                        style="
+                            background: transparent;
+                            border: 1px solid rgba(255,255,255,0.5);
+                            border-radius: 4px;
+                            padding: 12px 25px;
+                            color: white;
+                            font-size: 16px;
+                            cursor: pointer;
+                            margin-left: 10px;
+                            transition: background 0.3s;
+                        "
+                        onmouseover="this.style.background='rgba(255,255,255,0.1)'"
+                        onmouseout="this.style.background='transparent'"
+                    >Join Waitlist</button>
+                </form>
+                <p id="signup-message" style="margin-top: 15px; color: #90EE90;"></p>
+            </div>
+        </div>
+
+        <script>
+            $('#signup-form').on('submit', function(e) {
+                e.preventDefault();
+                var email = $('#email-input').val();
+                var $msg = $('#signup-message');
+                
+                $.ajax({
+                    url: '/api/email-signup',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ email: email }),
+                    success: function(response) {
+                        $msg.css('color', '#90EE90').text(response.message);
+                        $('#email-input').val('');
+                    },
+                    error: function(xhr) {
+                        var err = xhr.responseJSON ? xhr.responseJSON.error : 'Something went wrong.';
+                        $msg.css('color', '#FF6B6B').text(err);
+                    }
+                });
+            });
+        </script>
     </body>
 </html>
 
