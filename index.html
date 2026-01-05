@@ -45,6 +45,47 @@
                 </div>
                 <div id="emailSignupMessage" style="margin-top: 10px; display: none; padding: 10px; border-radius: 4px;"></div>
             </form>
+<<<<<<< HEAD
+=======
+
+            <script>
+                document.getElementById('emailForm').addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const email = document.getElementById('emailInput').value;
+                    const messageDiv = document.getElementById('formMessage');
+                    
+                    try {
+                        const response = await fetch('save_email.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ email: email })
+                        });
+                        
+                        const data = await response.json();
+                        messageDiv.style.display = 'block';
+                        
+                        if (data.success) {
+                            messageDiv.style.backgroundColor = '#d4edda';
+                            messageDiv.style.color = '#155724';
+                            messageDiv.textContent = 'Thank you! Your email has been saved.';
+                            document.getElementById('emailInput').value = '';
+                        } else {
+                            messageDiv.style.backgroundColor = '#f8d7da';
+                            messageDiv.style.color = '#721c24';
+                            messageDiv.textContent = 'Error: ' + data.message;
+                        }
+                    } catch (error) {
+                        messageDiv.style.display = 'block';
+                        messageDiv.style.backgroundColor = '#f8d7da';
+                        messageDiv.style.color = '#721c24';
+                        messageDiv.textContent = 'An error occurred. Please try again.';
+                    }
+                });
+            </script>
+>>>>>>> parent of 7366522 (sinup email connected to flask app)
         </section>
     </body>
 </html>
