@@ -2,19 +2,20 @@
 <html>
     <head>
         <title>MetaMilk</title>
-        <link rel="icon" type="image/x-icon" href="images/Logo_Two.png">
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='landing/images/Logo_Two.png') }}">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='landing/styles.css') }}">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="{{ url_for('static', filename='landing/script.js') }}" defer></script>
     </head>
     <body>
         <div class = "container-fluid section-one text-center">
-            <img src="images/Logo.png" alt="MetaMilk Logo" width="200" height="200" style="z-index: 3;">
+            <img src="{{ url_for('static', filename='landing/images/Logo.png') }}" alt="MetaMilk Logo" width="200" height="200" style="z-index: 3;">
             <h1 style="padding-top: 50px; padding-bottom: 20px;">MetaMilk Coming Q1 2026</h1>
             <h2>Prepare to hack the financial metaverse...</h2>
             <h3>Q1 2026</h3>
@@ -25,11 +26,11 @@
             <h2>Stay Updated</h2>
             <p>Subscribe to get the latest updates</p>
             
-            <form id="emailForm" style="max-width: 400px; margin: 20px auto;">
+            <form id="emailSignupForm" style="max-width: 400px; margin: 20px auto;">
                 <div style="display: flex; gap: 10px;">
                     <input 
                         type="email" 
-                        id="emailInput" 
+                        id="emailSignupInput" 
                         name="email" 
                         placeholder="Enter your email" 
                         required
@@ -42,46 +43,8 @@
                         Subscribe
                     </button>
                 </div>
-                <div id="formMessage" style="margin-top: 10px; display: none; padding: 10px; border-radius: 4px;"></div>
+                <div id="emailSignupMessage" style="margin-top: 10px; display: none; padding: 10px; border-radius: 4px;"></div>
             </form>
-
-            <script>
-                document.getElementById('emailForm').addEventListener('submit', async function(e) {
-                    e.preventDefault();
-                    
-                    const email = document.getElementById('emailInput').value;
-                    const messageDiv = document.getElementById('formMessage');
-                    
-                    try {
-                        const response = await fetch('/api/email-signup', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ email: email })
-                        });
-                        
-                        const data = await response.json().catch(() => ({}));
-                        messageDiv.style.display = 'block';
-                        
-                        if (response.ok && data.ok) {
-                            messageDiv.style.backgroundColor = '#d4edda';
-                            messageDiv.style.color = '#155724';
-                            messageDiv.textContent = data.message || 'Thank you! Your email has been saved.';
-                            document.getElementById('emailInput').value = '';
-                        } else {
-                            messageDiv.style.backgroundColor = '#f8d7da';
-                            messageDiv.style.color = '#721c24';
-                            messageDiv.textContent = 'Error: ' + (data.error || data.message || 'Unable to save email.');
-                        }
-                    } catch (error) {
-                        messageDiv.style.display = 'block';
-                        messageDiv.style.backgroundColor = '#f8d7da';
-                        messageDiv.style.color = '#721c24';
-                        messageDiv.textContent = 'An error occurred. Please try again.';
-                    }
-                });
-            </script>
         </section>
     </body>
 </html>
