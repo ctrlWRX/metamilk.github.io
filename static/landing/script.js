@@ -20,6 +20,9 @@ $(document).ready(function () {
     var loginError = document.getElementById("loginError");
     var usernameField = document.getElementById("loginUsername");
     var passwordField = document.getElementById("loginPassword");
+    var emailSignupForm = document.getElementById("emailSignupForm");
+    var emailSignupInput = document.getElementById("emailSignupInput");
+    var emailSignupMessage = document.getElementById("emailSignupMessage");
 
     function clearError() {
         if (!loginError) {
@@ -57,6 +60,44 @@ $(document).ready(function () {
                 loadingText.classList.add("is-hidden");
             }
         }
+    }
+
+    function showEmailSignupMessage(message, isSuccess) {
+        if (!emailSignupMessage) {
+            return;
+        }
+        emailSignupMessage.style.display = "block";
+        if (isSuccess) {
+            emailSignupMessage.style.backgroundColor = "#d4edda";
+            emailSignupMessage.style.color = "#155724";
+        } else {
+            emailSignupMessage.style.backgroundColor = "#f8d7da";
+            emailSignupMessage.style.color = "#721c24";
+        }
+        emailSignupMessage.textContent = message;
+    }
+
+    function clearEmailSignupMessage() {
+        if (!emailSignupMessage) {
+            return;
+        }
+        emailSignupMessage.textContent = "";
+        emailSignupMessage.style.display = "none";
+    }
+
+    function setEmailSignupLoading(isLoading) {
+        if (!emailSignupForm) {
+            return;
+        }
+        var submitButton = emailSignupForm.querySelector("button[type='submit']");
+        if (!submitButton) {
+            return;
+        }
+        submitButton.disabled = isLoading;
+    }
+
+    function isValidEmail(value) {
+        return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value || "");
     }
 
     if ($loginModal.length) {
@@ -134,6 +175,67 @@ $(document).ready(function () {
                 .catch(function () {
                     setLoading(false);
                     showError("We could not reach the MetaMilk servers. Try again in a moment.");
+                });
+        });
+    }
+
+    if (emailSignupForm) {
+        emailSignupForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            if (!emailSignupInput) {
+                return;
+            }
+            var emailValue = emailSignupInput.value.trim();
+            if (!emailValue) {
+                showEmailSignupMessage("Enter your email address.", false);
+                return;
+            }
+            if (!isValidEmail(emailValue)) {
+                showEmailSignupMessage("Enter a valid email address.", false);
+                return;
+            }
+            clearEmailSignupMessage();
+            setEmailSignupLoading(true);
+
+            fetch("/api/email-signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email: emailValue })
+            })
+                .then(function (response) {
+                    return response
+                        .json()
+                        .catch(function () {
+                            return {};
+                        })
+                        .then(function (payload) {
+                            return {
+                                ok: response.ok,
+                                status: response.status,
+                                payload: payload
+                            };
+                        });
+                })
+                .then(function (result) {
+                    setEmailSignupLoading(false);
+                    if (result.ok && result.payload && result.payload.ok) {
+                        showEmailSignupMessage(
+                            result.payload.message || "Thank you! Your email has been saved.",
+                            true
+                        );
+                        emailSignupInput.value = "";
+                        return;
+                    }
+                    var message =
+                        (result.payload && (result.payload.error || result.payload.message)) ||
+                        "Unable to save email.";
+                    showEmailSignupMessage(message, false);
+                })
+                .catch(function () {
+                    setEmailSignupLoading(false);
+                    showEmailSignupMessage("We could not reach the MetaMilk servers. Try again in a moment.", false);
                 });
         });
     }
