@@ -11,8 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // Database configuration
 $servername = "localhost"; // Change if needed
 $db_username = "root"; // Change to your DB username
-$db_password = ""; // Change to your DB password
-$dbname = "metamilk_database"; // Based on your database name
+$db_password = "8169"; // Change to your DB password
+$dbname = "metamilk"; // Based on your database name
 
 // Get the email from the request
 $data = json_decode(file_get_contents("php://input"), true);
