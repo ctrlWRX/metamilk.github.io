@@ -197,7 +197,7 @@ $(document).ready(function () {
             clearEmailSignupMessage();
             setEmailSignupLoading(true);
 
-            fetch("/api/email-signup", {
+            fetch("https://api.metamilktech.com/api/email-signup", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
