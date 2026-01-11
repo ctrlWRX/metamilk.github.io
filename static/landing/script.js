@@ -1,6 +1,8 @@
 $(document).ready(function () {
-    // API Base URL for MetaMilk backend
-    var API_BASE_URL = "https://https://metamilk.pythonanywhere.com";
+    // API Base URL - change for production vs development
+    var API_BASE_URL = "https://api.metamilktech.com";
+    // Uncomment below for local development:
+    // var API_BASE_URL = "";
 
     $(".navbar a").on("click", function (event) {
         if (this.hash !== "") {

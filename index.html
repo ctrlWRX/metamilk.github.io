@@ -9,8 +9,8 @@
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     </head>
     <body>
         <div class = "container-fluid section-one text-center">
@@ -60,13 +60,18 @@
         </div>
 
         <script>
+            var API_BASE_URL =
+                window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+                    ? ""
+                    : "https://api.metamilktech.com";
+
             $('#signup-form').on('submit', function(e) {
                 e.preventDefault();
                 var email = $('#email-input').val();
                 var $msg = $('#signup-message');
                 
                 $.ajax({
-                    url: '/api/email-signup',
+                    url: API_BASE_URL + '/api/email-signup',
                     type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify({ email: email }),
