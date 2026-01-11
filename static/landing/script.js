@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    // API Base URL for MetaMilk backend
+    var API_BASE_URL = "https://api.metamilktech.com";
+
     $(".navbar a").on("click", function (event) {
         if (this.hash !== "") {
             event.preventDefault();
@@ -130,7 +133,7 @@ $(document).ready(function () {
             clearError();
             setLoading(true);
 
-            fetch("/api/login", {
+            fetch(API_BASE_URL + "/api/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -197,7 +200,7 @@ $(document).ready(function () {
             clearEmailSignupMessage();
             setEmailSignupLoading(true);
 
-            fetch("https://api.metamilktech.com/api/email-signup", {
+            fetch(API_BASE_URL + "https://metamilk.pythonanywhere.com/api/email-signup", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
