@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // API Base URL for MetaMilk backend
-    var API_BASE_URL = "https://api.metamilktech.com";
+    var API_BASE_URL = "https://https://metamilk.pythonanywhere.com";
 
     $(".navbar a").on("click", function (event) {
         if (this.hash !== "") {
@@ -200,7 +200,7 @@ $(document).ready(function () {
             clearEmailSignupMessage();
             setEmailSignupLoading(true);
 
-            fetch(API_BASE_URL + "https://metamilk.pythonanywhere.com/api/email-signup", {
+            fetch(API_BASE_URL + "/api/email-signup.metamilktech.com", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
