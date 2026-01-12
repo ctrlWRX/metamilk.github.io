@@ -1,91 +1,212 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>MetaMilk</title>
-        <link rel="icon" type="image/x-icon" href="images/Logo_Two.png">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<title>MetaMilk</title>
+<link rel="icon" type="image/x-icon" href="images/Logo_Two.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Grotesk:300,400,500,600,700|Righteous">
+<style>
+:root {
+  --mm-bg: #050b16;
+  --mm-ink: #e7f5ff;
+  --mm-muted: #9db7d3;
+  --mm-card: #0b1f36;
+  --mm-card-2: #0f2a4a;
+  --mm-accent: #25f0b5;
+  --mm-cyan: #62e3ff;
+  --mm-border: rgba(98, 227, 255, 0.18);
+}
 
-        <link rel="stylesheet" href="styles.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+body, h1, h2, h3, h4, h5, h6 {font-family: "Space Grotesk", sans-serif;}
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    </head>
-    <body>
-        <div class = "container-fluid section-one text-center">
-            <img src="images/Logo.png" alt="MetaMilk Logo" width="200" height="200" style="z-index: 3;">
-            <h1 style="padding-top: 50px; padding-bottom: 20px;">MetaMilk Coming Q1 2026</h1>
-            <h2>Prepare to hack the financial metaverse...</h2>
-            <h3>Q1 2026</h3>
-            
-            <!-- Email Signup Form -->
-            <div id="email-signup" style="margin-top: 30px;">
-                <form id="signup-form" style="display: inline-block;">
-                    <input 
-                        type="email" 
-                        id="email-input" 
-                        placeholder="Enter your email" 
-                        required
-                        style="
-                            background: transparent;
-                            border: 1px solid rgba(255,255,255,0.5);
-                            border-radius: 4px;
-                            padding: 12px 20px;
-                            color: white;
-                            font-size: 16px;
-                            width: 280px;
-                            outline: none;
-                        "
-                    >
-                    <button 
-                        type="submit" 
-                        style="
-                            background: transparent;
-                            border: 1px solid rgba(255,255,255,0.5);
-                            border-radius: 4px;
-                            padding: 12px 25px;
-                            color: white;
-                            font-size: 16px;
-                            cursor: pointer;
-                            margin-left: 10px;
-                            transition: background 0.3s;
-                        "
-                        onmouseover="this.style.background='rgba(255,255,255,0.1)'"
-                        onmouseout="this.style.background='transparent'"
-                    >Join Waitlist</button>
-                </form>
-                <p id="signup-message" style="margin-top: 15px; color: #90EE90;"></p>
-            </div>
-        </div>
+body, html {
+  height: 100%;
+  line-height: 1.8;
+  font-size: 18px;
+  background: radial-gradient(circle at 15% 20%, rgba(18, 66, 108, 0.45), transparent 55%),
+    linear-gradient(135deg, #03060f 0%, #071225 45%, #0a0f1a 100%);
+  color: var(--mm-ink);
+}
 
-        <script>
-            var API_BASE_URL =
-                window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-                    ? ""
-                    : "https://metamilk.pythonanywhere.com";
+.mm-nav {
+  background: rgba(6, 18, 36, 0.9);
+  border-bottom: 1px solid var(--mm-border);
+  color: var(--mm-ink);
+}
 
-            $('#signup-form').on('submit', function(e) {
-                e.preventDefault();
-                var email = $('#email-input').val();
-                var $msg = $('#signup-message');
-                
-                $.ajax({
-                    url: API_BASE_URL + '/api/email-signup',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({ email: email }),
-                    success: function(response) {
-                        $msg.css('color', '#90EE90').text(response.message);
-                        $('#email-input').val('');
-                    },
-                    error: function(xhr) {
-                        var err = xhr.responseJSON ? xhr.responseJSON.error : 'Something went wrong.';
-                        $msg.css('color', '#FF6B6B').text(err);
-                    }
-                });
-            });
-        </script>
-    </body>
+.mm-nav .w3-button {color: var(--mm-ink);}
+
+.mm-nav .w3-button:hover {
+  color: var(--mm-accent);
+  background: rgba(37, 240, 181, 0.12);
+}
+
+.mm-hero {
+  background: linear-gradient(135deg, rgba(3, 6, 15, 0.8), rgba(7, 18, 37, 0.7)),
+    url("images/Milky_Way.png") center/cover no-repeat;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+}
+
+.mm-hero .mm-hero-card {
+  background: rgba(6, 18, 36, 0.7);
+  border: 1px solid var(--mm-border);
+  border-radius: 18px;
+  padding: 40px 44px;
+  width: min(90vw, 880px);
+  min-height: min(70vh, 640px);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45);
+  text-align: center;
+}
+
+.mm-hero h1 {
+  font-family: "Righteous", sans-serif;
+  letter-spacing: 4px;
+  font-size: 44px;
+}
+
+.mm-chip {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(37, 240, 181, 0.14);
+  color: var(--mm-accent);
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.mm-logo {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+.mm-hero-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.mm-chip-right {
+  display: inline-flex;
+  margin-left: auto;
+  margin-right: 0;
+  margin-bottom: 50px;
+}
+
+.mm-button {
+  background: var(--mm-accent);
+  color: #04121d;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: 16px;
+}
+
+.mm-button:hover {
+  background: #6cf0d1;
+  color: #04121d;
+}
+
+.mm-muted {color: var(--mm-muted);}
+
+.mm-input {
+  background: #f6fbff;
+  color: #0a0f18;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.mm-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.mm-form .mm-input {
+  flex: 1 1 240px;
+}
+
+.mm-form .mm-button {
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  .mm-hero .mm-hero-card {
+    width: 92vw;
+    min-height: auto;
+  }
+  .mm-hero h1 {
+    font-size: 34px;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="mm-hero w3-text-white" id="home">
+  <div class="mm-hero-card">
+      <div class="mm-hero-head">
+        <img class="mm-logo" src="images/Logo.png" alt="MetaMilk Logo">
+      </div>
+      <h1 class="w3-xxlarge w3-margin-top">Prepare to hack the financial metaverse.</h1>
+      <span class="mm-chip mm-chip-right">Coming Q1 2026</span>
+      <p class="mm-muted">MetaMilk is your gateway to signal clarity, quant targets, and operator-ready workflows.</p>
+      <form id="signup-form" class="mm-form">
+        <input class="w3-input mm-input" type="email" id="email-input" placeholder="Enter your email" required>
+        <button class="w3-button mm-button w3-padding-large" type="submit">Join Waitlist</button>
+      </form>
+      <p id="signup-message" class="mm-muted" style="margin-top: 12px;"></p>
+  </div>
+</header>
+
+<script>
+var API_BASE_URL =
+  window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? ""
+    : "https://api.metamilktech.com";
+
+document.getElementById("signup-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var emailInput = document.getElementById("email-input");
+  var message = document.getElementById("signup-message");
+
+  fetch(API_BASE_URL + "/api/email-signup", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email: emailInput.value })
+  })
+    .then(function (response) {
+      return response.json().then(function (data) {
+        if (!response.ok) {
+          throw data;
+        }
+        return data;
+      });
+    })
+    .then(function (data) {
+      message.style.color = "#90EE90";
+      message.textContent = data.message;
+      emailInput.value = "";
+    })
+    .catch(function (err) {
+      message.style.color = "#FF6B6B";
+      message.textContent = err && err.error ? err.error : "Something went wrong.";
+    });
+});
+</script>
+
+</body>
 </html>
-
