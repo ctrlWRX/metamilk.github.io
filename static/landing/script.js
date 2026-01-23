@@ -1,8 +1,8 @@
 $(document).ready(function () {
     // API Base URL - change for production vs development
-    var API_BASE_URL = "https://api.metamilktech.com";
+    // var API_BASE_URL = "https://api.metamilktech.com";
     // Uncomment below for local development:
-    // var API_BASE_URL = "";
+    var API_BASE_URL = "";
 
     $(".navbar a").on("click", function (event) {
         if (this.hash !== "") {
@@ -208,7 +208,6 @@ $(document).ready(function () {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({ email: emailValue })
-            })
                 .then(function (response) {
                     return response
                         .json()
